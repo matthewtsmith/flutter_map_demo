@@ -1,8 +1,6 @@
 # nomnom
 
-A Flutter application for tracking your favorite restaurants
+A example Flutter application using the [map_view plugin](https://pub.dartlang.org/packages/map_view).
 
-## Getting Started
+[Related Article](https://medium.com/@matthew.smith_66715/maps-in-flutter-a1ac49ab554b)
 
-For help getting started with Flutter, view our online
-[documentation](http://flutter.io/).

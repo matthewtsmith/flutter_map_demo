@@ -76,20 +76,24 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future _addFavorite() async {
+    //1. Show the map
     mapView.show(
         new MapOptions(
             showUserLocation: true,
             title: "Choose a favorite",
-            initialCameraPosition:
-                new CameraPosition(new Location(45.512287, -122.645913), 18.0)),
+            initialCameraPosition: new CameraPosition(new Location(45.512287, -122.645913), 18.0)),
         toolbarActions: <ToolbarAction>[new ToolbarAction("Close", 1)]);
+
+    //2. Listen for the onMapReady
     var sub = mapView.onMapReady.listen((_) => _updateRestaurantsAroundUser());
     compositeSubscription.add(sub);
 
+    //3. Listen for camera changed events
     sub =
         mapView.onCameraChanged.listen((cam) => _updateRestaurantsAroundUser());
     compositeSubscription.add(sub);
 
+    //4. Listen for toolbar actions
     sub = mapView.onToolbarAction.listen((id) {
       if (id == 1) {
         mapView.dismiss();
@@ -99,8 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future _updateRestaurantsAroundUser() async {
+    //1. Ask the mapView for the center lat,lng of it's viewport.
     var mapCenter = await mapView.centerLocation;
-
+    //2. Search for restaurants using the Places API
     var placeApi = new places.GoogleMapsPlaces(apiKey);
     var placeResponse = await placeApi.searchNearbyWithRadius(
         new places.Location(mapCenter.latitude, mapCenter.longitude), 200,
@@ -111,7 +116,11 @@ class _MyHomePageState extends State<MyHomePage> {
       return;
     }
     var results = placeResponse.results;
+
+    //3. Call our _updateMarkersFromResults method update the pins on the map
     _updateMarkersFromResults(results);
+
+    //4. Listen for the onInfoWindowTapped callback so we know when the user picked a favorite.
     var sub = mapView.onInfoWindowTapped.listen((m) {
       var selectedResult = results.firstWhere((r) => r.id == m.id);
       if (selectedResult != null) {
@@ -121,16 +130,26 @@ class _MyHomePageState extends State<MyHomePage> {
     compositeSubscription.add(sub);
   }
 
-  _updateMarkersFromResults(List<places.PlacesSearchResult> results) {
+  void _updateMarkersFromResults(List<places.PlacesSearchResult> results) {
+    //1. Turn the list of `PlacesSearchResult` into `Markers`
     var markers = results
         .map((r) => new Marker(
             r.id, r.name, r.geometry.location.lat, r.geometry.location.lng))
         .toList();
+
+    //2. Get the list of current markers
     var currentMarkers = mapView.markers;
 
+    //3. Create a list of markers to remove
     var markersToRemove = currentMarkers.where((m) => !markers.contains(m));
+
+    //4. Create a list of new markers to add
     var markersToAdd = markers.where((m) => !currentMarkers.contains(m));
+
+    //5. Remove the relevant markers from the map
     markersToRemove.forEach((m) => mapView.removeMarker(m));
+
+    //6. Add the relevant markers to the map
     markersToAdd.forEach((m) => mapView.addMarker(m));
   }
 
