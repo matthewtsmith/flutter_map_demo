@@ -1,0 +1,35 @@
+PODS:
+  - Flutter (1.0.0)
+  - GoogleMaps (2.3.1):
+    - GoogleMaps/Maps (= 2.3.1)
+  - GoogleMaps/Base (2.3.1)
+  - GoogleMaps/Maps (2.3.1):
+    - GoogleMaps/Base
+  - location (0.0.1):
+    - Flutter
+  - map_view (0.0.1):
+    - Flutter
+    - GoogleMaps
+
+DEPENDENCIES:
+  - Flutter (from `/Users/matthew/flutter/bin/cache/artifacts/engine/ios`)
+  - location (from `/Users/matthew/.pub-cache/hosted/pub.dartlang.org/location-1.1.7/ios`)
+  - map_view (from `/Users/matthew/.pub-cache/hosted/pub.dartlang.org/map_view-0.0.10/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: /Users/matthew/flutter/bin/cache/artifacts/engine/ios
+  location:
+    :path: /Users/matthew/.pub-cache/hosted/pub.dartlang.org/location-1.1.7/ios
+  map_view:
+    :path: /Users/matthew/.pub-cache/hosted/pub.dartlang.org/map_view-0.0.10/ios
+
+SPEC CHECKSUMS:
+  Flutter: d674e78c937094a75ac71dd77e921e840bea3dbf
+  GoogleMaps: c66a71058b9b1294bcdd5463a68e357fa50c079f
+  location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
+  map_view: 2cc7fe6d6e9b9b158c46383ebca44e2d1b09abb8
+
+PODFILE CHECKSUM: 351e02e34b831289961ec3558a535cbd2c4965d2
+
+COCOAPODS: 1.3.1
